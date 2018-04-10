@@ -5,12 +5,4 @@ function Card(symbol, color) {
     this.img = symbol + "_" + color;
     this.usable = false;
     this.element = null;
-    this.checkAvb = function(card){
-        if(card.color == this.color 
-            || card.symbol == this.symbol){
-                this.usable = true;
-                this.element.classList.add("usable");
-                this.element.onclick =  move;
-            }
-    }
 }

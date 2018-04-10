@@ -1,5 +1,7 @@
-function Dec{
+function Deck(EventListenerEmpty){
     this.cards = [],
+    this.onEmptyDeck = new EventDispatcher(this);
+    this.onEmptyDeck.attach(EventListenerEmpty);
     this.createDec = function() {
         //create {1-9}/2
         let colors = ["red", "green", "blue", "yellow"];
@@ -30,5 +32,10 @@ function Dec{
         let card = this.cards[rand];
         this.cards.splice(rand, 1);
         return card;
-    }
+    },
+    //when the deck is empty this func returns all cards
+    //from used cards except the top card(last)
+    this.reshuffle = function(cards){
+        this.cards = cards;
+    } 
 }
