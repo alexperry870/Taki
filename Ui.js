@@ -1,17 +1,21 @@
 function Ui(){
-    var ending = ".png", cardBack = "card_back.png", dir = "Cards/";
+    this.ending = ".png";
+    this.cardBack = "card_back.png";
+    this.dir = "Cards/";
+    this.btn_st = null;
 
-    removeStartBtn = function() {
+    this.removeStartBtn = function() {
         let btn_st_temp = document.getElementById("stbtn");
-        btn_st = btn_st_temp.cloneNode();
+        this.btn_st = btn_st_temp.cloneNode();
         btn_st_temp.remove();
     },
-    shuffleCards = function(player,opp){
+
+    this.shuffleCards = function(player,opp){
       this.initDeck();
       this.initPlayer(player);
       this.initOpp1(pc);  
     },
-    initDeck = function(){
+    this.initDeck = function(){
         let deck = document.getElementById("deck");
         let deckCard = document.createElement("img");
         deckCard.setAttribute("src", dir+cardBack);
@@ -19,13 +23,13 @@ function Ui(){
         deckCard.setAttribute("class", "card");
         deck.appendChild(deckCard);
     },
-    initPlayer = function(player){
+    this.initPlayer = function(player){
         let cards = player.hand;
         for(let card in cards){
             cards[card].element = this.addCardPlayer(cards[card]);
         }     
     },
-    addCardPlayer = function(card){
+    this.addCardPlayer = function(card){
         let player = document.getElementById("player");
         let cardImg = document.createElement("img");
         cardImg.src = dir + card.img + ending;
@@ -35,13 +39,13 @@ function Ui(){
         return cardImg;
 
     },
-    initOpp1 = function(pc){
+    this.initOpp1 = function(pc){
         let cards = pc.hand;
         for(let card in cards){
             cards[card].element = this.addCardOpp1(cards[card]);
         }     
     },
-    addCardOpp1= function(card){
+    this.addCardOpp1= function(card){
         let opp1 = document.getElementById("opp1");
         let cardImg = document.createElement("img");
         cardImg.src = dir+cardBack;
@@ -50,7 +54,7 @@ function Ui(){
         opp1.appendChild(cardImg);
         return cardImg;
     },
-    updateUsed = function(used){
+    this.updateUsed = function(used){
         let usedCard = document.getElementById("used");
         let cardImg = document.createElement("img");
         let last = used.length - 1;
@@ -58,5 +62,16 @@ function Ui(){
         cardImg.alt = "card";
         cardImg.className = "card";
         usedCard.appendChild(cardImg);
+    },
+    this.move = function(element){
+        let dec = document.getElementById("used");
+        if (dec.childElementCount > 0) {
+            dec.removeChild(dec.children[0]);
+        }
+        let elem = element.toElement;
+        dec.appendChild(elem);
+        dec.removeAttribute("onclick");
+        elem.removeEventListener("onclick", move, true);
     }
+    
 }
