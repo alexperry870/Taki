@@ -8,7 +8,7 @@ function EventDispatcher (sender) {
 
     this.notify =  function (args) {
         for (var i = 0; i < this._listeners.length; i += 1) {
-            this._listeners[i](this._sender, args);
+            this._listeners[i](args);
         }
     },
 

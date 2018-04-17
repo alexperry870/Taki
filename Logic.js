@@ -8,7 +8,7 @@ Logic = function () {
             return true;
         }
         else {
-            return false;
+            return true;
         }
     }
 }

@@ -1,0 +1,114 @@
+body{
+    background-color: cadetblue;
+
+}
+#stbtn{
+    position: absolute;
+
+    left: 40%;
+    top:30%;
+}
+#stbtn:hover{
+    box-shadow: 40px;    
+    transform: translateY(-10px);
+}
+#stbtn:hover:active{
+    transform: translateY(14px);
+}
+.card{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 13px;
+    transition-duration: 0.4s;
+    max-height: 130px;
+    height: 90px;
+}
+#deck{
+        position: absolute;
+        top: 50%;
+        left: 60%;
+        transform: translate(-50%, -50%); 
+}
+#used{
+    /*visibility: hidden;*/    
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.hand{
+    justify-content: center;
+    display: flex;
+    flex-wrap: nowrap;
+    position: fixed;
+    justify-content: center;
+    align-items: stretch;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+#opp1.hand{
+    top: 15%;
+}
+#player.hand{
+    top: 85%;
+}
+#player >.card.usable:hover{
+    box-shadow: 40px;
+    background-color: #3e8e41;
+    transform: translateY(-14px);
+}
+
+#player >.card.usable:hover:active {
+    background-color: #3e8e41;
+    box-shadow: 0 8px #666;
+    transform: translateY(14px);
+}
+
+#deckCard.card.usable:hover{
+    box-shadow: 40px;
+    background-color: #3e8e41;
+    transform: translateY(-14px);
+}
+#deckCard.card.usable:hover:active{
+    background-color: #3e8e41;
+    box-shadow: 0 8px #666;
+    transform: translateY(14px);
+}
+#score{
+    background-color: rgb(219, 58, 0);
+    position: absolute;
+    border: 8px solid seagreen;
+    border-radius: 10px;
+    height: 200px;
+    width: 450px;
+    left: 38%;
+    top: 30%;
+    font-family: monospace;
+    font-size: 24px;
+    padding: 20px 0;
+    text-align: center;
+}
+#btnRestart{
+    height: 20%;
+    position: inherit;
+    top: 80%;
+    left: 89%;
+}
+#btnRestart.usable:hover:active{
+    transform: translateY(12px);
+}
+#counter{
+    position: absolute;
+    border: 4px solid orangered;
+    border-radius: 6px;
+    height: 40px;
+    width: 40px;
+    font-family: monospace;
+    font-size: 16px;
+    text-align: center;
+}
+#btnQuit{
+    position: absolute;
+    width: 50px;
+    left: 96%;
+}

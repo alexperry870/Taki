@@ -15,13 +15,13 @@ function Deck(EventListenerEmpty){
             }
         }
         //add colorfoul cards
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 2; i++) {
             this.cards.push(new Card("change", "colorful"));
         }
     },
     this.getHand = function(){
         let hand = [];        
-        for(let i = 0; i < 8; i++){
+        for(let i = 0; i < 2; i++){
             hand.push(this.getCard());
         }
         return hand;
@@ -31,6 +31,9 @@ function Deck(EventListenerEmpty){
         let rand = Math.floor(Math.random() * len);
         let card = this.cards[rand];
         this.cards.splice(rand, 1);
+        if(this.cards.length <=0){
+            this.onEmptyDeck.notify();
+        }
         return card;
     },
     //when the deck is empty this func returns all cards
