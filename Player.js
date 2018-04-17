@@ -25,6 +25,7 @@ function Player(name, hand) {
         this.hand.forEach(card => {
             card.usable = false;
         })
+        this.avlbl = false;
     },
     this.addCard = function(card){
         this.hand.push(card);

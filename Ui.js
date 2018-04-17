@@ -6,27 +6,27 @@ function Ui() {
     this.clickDeck = new EventDispatcher(this); //event of click on deck
     this.clickCard = new EventDispatcher(this);
     this.clickQuit = new EventDispatcher(this);
-    this.init = function(){
+    this.init = function () {
         this.removeStartBtn();
         this.addScoreBox();
         this.addQuitBtn();
     },
-    this.addQuitBtn = function(){
-        var quit = document.createElement("img")
-        quit.src = "button_quit.png";
-        quit.id = "btnQuit";
-        quit.alt = "Quit";
-        quit.title = "Quit";
-        quit.onclick = this.onClickQuit.bind(this);
-        var body = document.getElementsByTagName("body")[0];
-        body.appendChild(quit);
-    }
-    this.addScoreBox = function () {
-        var box = document.createElement("div");
-        var board = document.getElementById("board");
-        box.id = "counter";
-        board.appendChild(box);
-    },
+        this.addQuitBtn = function () {
+            var quit = document.createElement("img")
+            quit.src = "button_quit.png";
+            quit.id = "btnQuit";
+            quit.alt = "Quit";
+            quit.title = "Quit";
+            quit.onclick = this.onClickQuit.bind(this);
+            var body = document.getElementsByTagName("body")[0];
+            body.appendChild(quit);
+        },
+        this.addScoreBox = function () {
+            var box = document.createElement("div");
+            var board = document.getElementById("board");
+            box.id = "counter";
+            board.appendChild(box);
+        },
         // event of click on avlbl card
         this.removeStartBtn = function () {
             var btn_st_temp = document.getElementById("stbtn");
@@ -177,7 +177,7 @@ function Ui() {
             deck.removeChildren();
             player.removeChildren();
         },
-        this.onClickQuit = function(){
+        this.onClickQuit = function () {
             this.clickQuit.notify();
         }
 
