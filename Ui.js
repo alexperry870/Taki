@@ -175,6 +175,10 @@ function Ui() {
         var player = document.getElementById("player");
         var score = document.getElementById("counter");
         var quit = document.getElementById("btnQuit");
+        var colorBox = document.getElementById("colorMenu");
+        if(colorBox != null){
+            colorBox.removeChildren();
+        }
         score.remove();
         quit.remove();
         oppHand.removeChildren();
