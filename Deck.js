@@ -7,7 +7,7 @@ function Deck(EventListenerEmpty){
         var colors = ["red", "green", "blue", "yellow"];
         var color_cards =
             [1, 3, 4, 5, 6, 7, 8, 9, "taki", "stop",];
-        for (var i = 0; i < 1; i++) {
+        for (var i = 0; i < 2; i++) {
             for (var symbol in color_cards) {
                 for (var color in colors) {
                     this.cards.push(new Card(color_cards[symbol], colors[color]));
