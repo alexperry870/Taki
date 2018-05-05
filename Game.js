@@ -42,45 +42,45 @@ function Game(ui) {
 
     this.playerTurn = function () {
         this.startTurnTime = new Date();
-        if (this.player.hand.length > 0) {//hand is not empty
-            this.player.incTurn();
-            this.ui.updateStateBox(this.player.turnCount, this.deck.cards.length);
-            var lastCard = this.used[this.used.length - 1];
-            this.player.checkCards(lastCard, this.logic.check);
-            if (this.player.isAvlbl()) {//there is a playble card
-                this.ui.renderHand(this.player.hand);
-                this.ui.clickCard.attach(this.clickOnCard.bind(this));
-            }
-            else {
-                this.ui.enableDeck(this.clickOnDeck.bind(this));
-            }
+        this.player.incTurn();
+        this.ui.updateStateBox(this.player.turnCount, this.deck.cards.length);
+        var lastCard = this.used[this.used.length - 1];
+        this.player.checkCards(lastCard, this.logic.check);
+        if (this.player.isAvlbl()) {//there is a playble card
+            this.ui.renderHand(this.player.hand);
+            this.ui.clickCard.attach(this.clickOnCard.bind(this));
         }
         else {
-            this.taki(this.player);
+            this.ui.enableDeck(this.clickOnDeck.bind(this));
         }
     };
 
     this.clickOnCard = function (element) {
         var card = this.player.findByElem(element);
         this.toseCard(card);
-        if (card.symbol == "stop") {
-            this.lockPlayer();
-            this.playerTurn();
-        }
-        else if (card.symbol == "change") {
-            this.ui.colorMenu(this.clickOnColor.bind(this));
-            this.lockPlayer();
+        if (this.player.hand.length == 0) {
+            this.taki(this.player);
         }
         else {
-            if (card.symbol == "taki") {
-                var cardsToTose = this.player.getCardsSameColor(card.color);
-                for (var cardIndex in cardsToTose) {
-                    var cardToTose = cardsToTose[cardIndex];
-                    this.toseCard(cardToTose);
-                }
+            if (card.symbol == "stop") {
+                this.lockPlayer();
+                this.playerTurn();
             }
+            else if (card.symbol == "change") {
+                this.ui.colorMenu(this.clickOnColor.bind(this));
+                this.lockPlayer();
+            }
+            else {
+                if (card.symbol == "taki") {
+                    var cardsToTose = this.player.getCardsSameColor(card.color);
+                    for (var cardIndex in cardsToTose) {
+                        var cardToTose = cardsToTose[cardIndex];
+                        this.toseCard(cardToTose);
+                    }
+                }
 
-            this.endPlayerTurn();
+                this.endPlayerTurn();
+            }
         }
     };
     this.toseCard = function (card) {
@@ -166,5 +166,5 @@ function Game(ui) {
     this.quit = function () {
         this.taki(this.pc);
     }
-}
 
+}
