@@ -45,7 +45,7 @@ function Game(ui) {
         this.player.incTurn();
         this.ui.updateStateBox(this.player.turnCount, this.deck.cards.length);
         var lastCard = this.used[this.used.length - 1];
-        this.player.checkCards(lastCard, this.logic.check);
+        this.player.checkCards(lastCard, this.logic.check, this.plusTwoState);
         if (this.player.isAvlbl()) {//there is a playble card
             this.ui.renderHand(this.player.hand);
             this.ui.clickCard.attach(this.clickOnCard.bind(this));
@@ -54,15 +54,37 @@ function Game(ui) {
             this.ui.enableDeck(this.clickOnDeck.bind(this));
         }
     };
+    this.plusTwoState = false;
+    this.plusTwoCounter = 0;
+    this.plus2Inc = function () {
+        this.plusTwoState = true;
+        this.plusTwoCounter += 2;
+    };
+    this.plus2Disable = function () {
+        this.plusTwoState = false;
+        this.plusTwoCounter = 0;
+    };
+    this.plus2Dec = function () {
+        if (this.plusTwoCounter > 0) {
+            this.plusTwoCounter -= 1;
+        }
 
+        if (this.plusTwoCounter == 0) {
+            this.plusTwoState = false;
+        }
+    };
     this.clickOnCard = function (element) {
+        var lastCard = this.used[this.used.length - 1];
         var card = this.player.findByElem(element);
         this.toseCard(card);
         if (this.player.hand.length == 0) {
             this.taki(this.player);
         }
         else {
-            if (card.symbol == "stop") {
+            if (card.symbol == "2plus") {
+                this.plus2Inc();
+            }
+            if (card.symbol == "plus" || card.symbol == "stop") {//ex3 will get different
                 this.lockPlayer();
                 this.playerTurn();
             }
@@ -72,7 +94,12 @@ function Game(ui) {
             }
             else {
                 if (card.symbol == "taki") {
-                    var cardsToTose = this.player.getCardsSameColor(card.color);
+                    color = card.color;
+                    if (card.color == "colorful") {
+                        color = lastCard.color;
+                    }
+
+                    var cardsToTose = this.player.getCardsSameColor(color);
                     for (var cardIndex in cardsToTose) {
                         var cardToTose = cardsToTose[cardIndex];
                         this.toseCard(cardToTose);
@@ -96,7 +123,15 @@ function Game(ui) {
         var card = this.deck.getCard();
         card.element = this.ui.addCardPlayer(card);
         this.player.addCard(card);
-        this.endPlayerTurn();
+        if (this.plusTwoState == true) {
+            this.plus2Dec();
+            if(this.plusTwoState == false){
+                this.endPlayerTurn();
+            }
+        }
+        else {
+            this.endPlayerTurn();
+        }
     };
 
     this.lockPlayer = function () {
@@ -118,12 +153,17 @@ function Game(ui) {
     this.playOpp = function () {
         this.pc.incTurn();
         var lastCard = this.used[this.used.length - 1];
-        var chosenCard = this.pc.getCardToUse(lastCard);
+        var chosenCard = this.pc.getCardToUse(lastCard, this.plusTwoState);
 
         if (chosenCard == null) {
-            chosenCard = this.deck.getCard();
-            this.pc.addCard(chosenCard);
-            this.ui.addCardOpp1(chosenCard);
+            var cardsToTake = 1;
+            while (this.plusTwoState == true) {
+                this.plus2Dec();
+                chosenCard = this.deck.getCard();
+                this.pc.addCard(chosenCard);
+                this.ui.addCardOpp1(chosenCard);
+            }
+            this.plus2Disable();
             this.playerTurn();
         }
         else {
@@ -132,16 +172,23 @@ function Game(ui) {
                 this.taki(this.pc);
             }
             else {
-                if (chosenCard.symbol == "stop") {
+                if (chosenCard.symbol == "stop" || chosenCard.symbol == "plus") {
                     this.playOpp();
                 }
                 else {
                     if (chosenCard.symbol == "taki") {
-                        var cardsToTose = this.pc.getCardsSameColor(chosenCard.color);
+                        var color = chosenCard.color;
+                        if(color == "colorful"){
+                            color = used[used.length - 2].color;
+                        }
+                        var cardsToTose = this.pc.getCardsSameColor(color);
                         for (var cardIndex in cardsToTose) {
                             var card = cardsToTose[cardIndex];
                             this.tosePcCard(card);
                         }
+                    }
+                    else if (chosenCard.symbol == "2plus") {
+                        this.plus2Inc();
                     }
                     this.playerTurn();
                 }

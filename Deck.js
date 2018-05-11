@@ -6,7 +6,7 @@ function Deck(EventListenerEmpty){
         //create {1-9}/2
         var colors = ["red", "green", "blue", "yellow"];
         var color_cards =
-            [1, 3, 4, 5, 6, 7, 8, 9, "taki", "stop",];
+            [1, 3, 4, 5, 6, 7, 8, 9, "taki", "stop", "plus", "2plus"];
         for (var i = 0; i < 2; i++) {
             for (var symbol in color_cards) {
                 for (var color in colors) {
@@ -15,8 +15,9 @@ function Deck(EventListenerEmpty){
             }
         }
         //add colorfoul cards
-        for (var i = 0; i < 2; i++) {
+        for (var i = 0; i < 20; i++) {
             this.cards.push(new Card("change", "colorful"));
+            this.cards.push(new Card("taki", "colorful"));
         }
     };
     this.getHand = function(){
