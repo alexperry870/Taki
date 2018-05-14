@@ -11,6 +11,13 @@ function Ui() {
         this.addScoreBox();
         this.addQuitBtn();
     };
+    this.cardIdCounter = 0;
+    this.newCardId = function(){
+        var res = this.cardIdCounter;
+        this.cardIdCounter += 1;
+        
+        return res;
+    };
     this.addQuitBtn = function () {
         var quit = document.createElement("img")
         quit.src = "button_quit.png";
@@ -61,13 +68,14 @@ function Ui() {
         var player = document.getElementById("player");
         var cardImg = this.getCardElem(card);
         player.appendChild(cardImg);
-        return cardImg;
+        return cardImg.id;
     };
     this.getCardElem = function(card){
         var cardImg = document.createElement("img");
         cardImg.src = this.dir + card.img + this.ending;
         cardImg.alt = "card";
         cardImg.className = "card";
+        cardImg.id = this.newCardId();
         return cardImg;
     };
     this.initOpp1 = function (pc) {
@@ -87,14 +95,15 @@ function Ui() {
     };
     this.renderHand = function (hand) {
         hand.forEach(card => {
+            var cardElem = document.getElementById(card.element);
             if (card.usable == true) {
-                card.element.classList.add("usable");
-                card.element.onclick = this.onClickCard.bind(this);
+                cardElem.classList.add("usable");
+                cardElem.onclick = this.onClickCard.bind(this);
             }
             else {
-                if (card.element.classList != null) {
-                    card.element.classList.remove("usable");
-                    card.element.onclick = null;
+                if (cardElem.classList != null) {
+                    cardElem.classList.remove("usable");
+                    cardElem.onclick = null;
                 }
             }
         });
@@ -116,7 +125,7 @@ function Ui() {
     };
 
     this.onClickCard = function (elem) {
-        this.clickCard.notify(elem.toElement);
+        this.clickCard.notify(elem.toElement.id);
     };
     this.updateUsed = function (card) {
         var cardImg = document.createElement("img");
@@ -124,6 +133,10 @@ function Ui() {
         cardImg.alt = "card";
         cardImg.className = "card";
         this.move(cardImg);
+    };
+    this.movePlayerCard = function(ElemId){
+        var cardElem = document.getElementById(ElemId);
+        this.move(cardElem);
     };
     this.move = function (element) {
         var dec = document.getElementById("used");

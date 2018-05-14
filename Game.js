@@ -112,7 +112,7 @@ function Game(ui) {
     };
     this.toseCard = function (card) {
         this.used.push(card);
-        this.ui.move(card.element);
+        this.ui.movePlayerCard(card.element);
         this.player.toseCard(card);
     };
     this.clickOnColor = function (color) {
@@ -157,11 +157,12 @@ function Game(ui) {
 
         if (chosenCard == null) {
             var cardsToTake = 1;
-            while (this.plusTwoState == true) {
+            while (this.plusTwoState == true || cardsToTake > 0) {
                 this.plus2Dec();
                 chosenCard = this.deck.getCard();
                 this.pc.addCard(chosenCard);
                 this.ui.addCardOpp1(chosenCard);
+                cardsToTake -=1;
             }
             this.plus2Disable();
             this.playerTurn();

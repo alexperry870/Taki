@@ -15,7 +15,7 @@ function Deck(EventListenerEmpty){
             }
         }
         //add colorfoul cards
-        for (var i = 0; i < 20; i++) {
+        for (var i = 0; i < 2; i++) {
             this.cards.push(new Card("change", "colorful"));
             this.cards.push(new Card("taki", "colorful"));
         }
